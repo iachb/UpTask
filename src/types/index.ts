@@ -6,6 +6,7 @@ export const projectSchema = z.object({
   projectName: z.string(),
   clientName: z.string(),
   description: z.string(),
+  tasks: z.array(z.string()),
 });
 
 export type Project = z.infer<typeof projectSchema>;
