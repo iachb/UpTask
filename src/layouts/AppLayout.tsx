@@ -1,6 +1,8 @@
-import { Outlet } from "react-router-dom"
-import Logo from "@/components/Logo"
-import NavMenu from "@/components/NavMenu"
+import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Logo from "@/components/Logo";
+import NavMenu from "@/components/NavMenu";
 
 export default function AppLayout() {
   return (
@@ -21,6 +23,7 @@ export default function AppLayout() {
           &copy; 2024 All rights reserved.
         </p>
       </footer>
+      <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
     </>
-  )
+  );
 }
