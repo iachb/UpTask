@@ -1,30 +1,34 @@
-# React + TypeScript + Vite
+# Project and Task Management Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a web application built using the MERN (MongoDB, Express.js, React.js, Node.js) stack. It allows users to manage projects and assign tasks to these projects. This project is part of the course **React y TypeScript - La Guía Completa Creando +10 Proyectos** by Juan Pablo De la Torre Valdez
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication and authorization
+- Create, update, and delete projects
+- Assign tasks to projects
+- Track task progress and completion
+- User-friendly interface
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- MongoDB: A NoSQL database for storing project and task data
+- Express.js: A web application framework for building the backend API
+- React.js: A JavaScript library for building the user interface
+- Node.js: A JavaScript runtime environment for running the backend server
+- HTML/CSS: Markup and styling for the frontend
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. Clone the repository: `git clone https://github.com/username/repo.git`
+2. Install dependencies: `npm install`
+3. Set up the MongoDB database connection in the `.env` file
+4. Start the development server: `npm start`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Usage
+
+1. Register a new user account or log in with an existing account
+2. Create a new project by providing a name and description
+3. Add tasks to the project and assign them to team members
+4. Track the progress of tasks and mark them as completed
+5. Update or delete projects and tasks as needed
