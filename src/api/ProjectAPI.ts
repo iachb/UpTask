@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
-import { ProjectFormData } from "../types";
+import { ProjectFormData, dashboardProjectSchema } from "../types";
 
 // Create a new project with the given data in the form data object and return the created project data
 export async function createProject(formData: ProjectFormData) {
@@ -17,10 +17,14 @@ export async function createProject(formData: ProjectFormData) {
   }
 }
 
+// Get all projects and return them
 export async function getProjects() {
   try {
     const { data } = await api.get("/projects");
-    return data;
+    const response = dashboardProjectSchema.safeParse(data);
+    if (response.success) {
+      return response.data;
+    }
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(

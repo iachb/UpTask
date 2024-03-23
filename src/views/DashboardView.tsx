@@ -26,6 +26,18 @@ export default function DashboardView() {
           New Project
         </Link>
       </nav>
+      {data?.length ? (
+        <p className="text-center py-20">There's projects</p>
+      ) : (
+        <>
+          <p className="text-center py-20">
+            No projects {""}{" "}
+            <Link className="text-fuchsia-500 font-bold" to="/projects/create">
+              Create Project{" "}
+            </Link>
+          </p>
+        </>
+      )}
     </>
   );
 }
