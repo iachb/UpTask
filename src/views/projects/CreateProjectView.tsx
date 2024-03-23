@@ -27,6 +27,7 @@ export default function CreateProjectView() {
       toast.error(error.message);
     },
     onSuccess: (data) => {
+      // "data" is the project data returned by the API, which is res.send("Succesful") in the backend
       toast.success(data);
       navigate("/");
     },
