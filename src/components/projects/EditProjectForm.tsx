@@ -2,22 +2,26 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ProjectForm from "./ProjectForm";
 import { ProjectFormData } from "@/types/index";
+import { EditProjectForm } from "@/components/projects/EditProjectForm";
 
-export default function EditProjectForm() {
-  
-  const initialValues: ProjectFormData = {
-    projectName: "",
-    clientName: "",
-    description: "",
-  };
+type EditProjectFormProps = {
+  data: ProjectFormData;
+};
 
+export default function EditProjectForm({ data }: EditProjectFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: initialValues });
+  } = useForm({
+    defaultValues: {
+      projectName: data.projectName,
+      clientName: data.clientName,
+      description: data.description,
+    },
+  });
 
-  const handleForm = () => {
+  const handleForm = (formData: ProjectFormData) => {
     // Call the API to update the project
   };
 
