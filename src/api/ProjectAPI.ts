@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
-import { ProjectFormData, dashboardProjectSchema } from "../types";
+import { Project, ProjectFormData, dashboardProjectSchema } from "../types";
 
 // Create a new project with the given data in the form data object and return the created project data
 export async function createProject(formData: ProjectFormData) {
@@ -31,6 +31,17 @@ export async function getProjects() {
         error.response?.data.message ||
           "An error occurred while getting the projects"
       );
+    }
+  }
+}
+// Get a project by its ID and return it
+export async function getProjectbyId(id: Project["_id"]) {
+  try {
+    const { data } = await api(`/projects/${id}`);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
     }
   }
 }
