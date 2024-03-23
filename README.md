@@ -20,10 +20,10 @@ This is a web application built using the MERN (MongoDB, Express.js, React.js, N
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/username/repo.git`
+1. Clone the repository: `git clone https://github.com/iachb/UpTask-Frontend.git`
 2. Install dependencies: `npm install`
 3. Set up the MongoDB database connection in the `.env` file
-4. Start the development server: `npm start`
+4. Start the development server: `npm run dev`
 
 ## Usage
 

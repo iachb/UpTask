@@ -1,14 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import ProjectForm from "@/components/projects/ProjectForm";
+import ProjectForm from "./ProjectForm";
 import { ProjectFormData } from "@/types/index";
-import { createProject } from "@/api/ProjectAPI";
-import { toast } from "react-toastify";
 
-export default function CreateProjectView() {
-  const navigate = useNavigate();
-
+export default function EditProjectForm() {
+  
   const initialValues: ProjectFormData = {
     projectName: "",
     clientName: "",
@@ -21,28 +17,16 @@ export default function CreateProjectView() {
     formState: { errors },
   } = useForm({ defaultValues: initialValues });
 
-  const { mutate } = useMutation({
-    mutationFn: createProject,
-    onError: (error) => {
-      toast.error(error.message);
-    },
-    onSuccess: (data) => {
-      // "data" is the project data returned by the API, which is res.send("Succesful") in the backend
-      toast.success(data);
-      navigate("/");
-    },
-  });
-
-  const handleForm = (formData: ProjectFormData) => {
-    mutate(formData);
+  const handleForm = () => {
+    // Call the API to update the project
   };
 
   return (
     <>
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-5xl font-black">Create Project</h1>
+        <h1 className="text-5xl font-black">Edit Project</h1>
         <p className="text-2xl font-light text-gray-500 mt-5">
-          Fill out the following form to edit a project
+          Fill out the following form to create a project
         </p>
         <nav className="my-5">
           <Link
@@ -61,7 +45,7 @@ export default function CreateProjectView() {
 
           <input
             type="submit"
-            value="Save Changes"
+            value="Create Proyect"
             className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 
           text-white uppercase font-bold cursor-pointer transition-colors"
           />
