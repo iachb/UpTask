@@ -29,11 +29,11 @@ export default function EditProjectForm({ data, projectId }: EditProjectFormProp
 
   const {mutate} = useMutation({
     mutationFn:updateProject,
-    onError: (error: Error) => {
+    onError: (error) => {
       toast.error(error.message);
     },
-    onSuccess: () => {
-      toast.success("Project updated successfully");
+    onSuccess: (data) => {
+      toast.success(data);
       navigate("/");
     }
   });
