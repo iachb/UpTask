@@ -89,7 +89,7 @@ export default function TaskModalDetails() {
                 >
                   <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
                     <p className="text-sm text-slate-400">
-                      Date added: {formatDate(data.createdAt)}
+                      Date Added: {formatDate(data.createdAt)}
                     </p>
                     <p className="text-sm text-slate-400">
                       Last Update: {formatDate(data.updatedAt)}
@@ -104,7 +104,7 @@ export default function TaskModalDetails() {
                       Description: {data.description}
                     </p>
                     <div className="my-5 space-y-3">
-                      <label className="font-bold">State: {data.status}</label>
+                      <label className="font-bold">State: </label>
                       <select
                         className="w-full p-3 bg-white border border-gray-300"
                         defaultValue={data.status}
