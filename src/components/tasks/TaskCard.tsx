@@ -21,16 +21,14 @@ export default function TaskCard({ task }: TaskCardProps) {
 
   const queryClient = useQueryClient();
 
-
   const {mutate} = useMutation({
     mutationFn: deleteTask,
     onError: (error: Error) => {
       toast.error(error.message);
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["editProject", projectId] });
       toast.success(data);
-      navigate(location.pathname, { replace: true });
+      queryClient.invalidateQueries({queryKey: ["project", projectId] });
     },
   });
 
