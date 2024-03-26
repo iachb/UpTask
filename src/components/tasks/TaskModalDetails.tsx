@@ -26,8 +26,6 @@ export default function TaskModalDetails() {
     retry: false,
   });
 
-  // Show a toast notification if the task is not found 
-  
   useEffect(() => {
     if (isError) {
       toast.error("Task not found", { toastId: "error" });
@@ -35,7 +33,7 @@ export default function TaskModalDetails() {
     }
   }, [isError, navigate, projectId]); // Note: We used useEffect because toast.error triggers a re-render while the component is mounted and that gives us an error
 
-  return (
+  if (data) return (
     <>
       <Transition appear show={show} as={Fragment}>
         <Dialog
@@ -67,19 +65,19 @@ export default function TaskModalDetails() {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
-                  <p className="text-sm text-slate-400">Agregada el: </p>
+                  <p className="text-sm text-slate-400">Date added: </p>
                   <p className="text-sm text-slate-400">
-                    Última actualización:{" "}
+                    Last Update:{" "}
                   </p>
                   <Dialog.Title
                     as="h3"
                     className="font-black text-4xl text-slate-600 my-5"
                   >
-                    Titulo aquí
+                    {data.name}
                   </Dialog.Title>
-                  <p className="text-lg text-slate-500 mb-2">Descripción:</p>
+                  <p className="text-lg text-slate-500 mb-2">Description: {data.description}</p>
                   <div className="my-5 space-y-3">
-                    <label className="font-bold">Estado Actual:</label>
+                    <label className="font-bold">State: </label>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
