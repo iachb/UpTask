@@ -1,14 +1,39 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getTaskbyId } from "@/api/TasksAPI";
+import { toast } from "react-toastify";
 
 export default function TaskModalDetails() {
+
+  const params = useParams();
+  const projectId = params.projectId!;
+
   const navigate = useNavigate();
+  
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const taskId = queryParams.get("viewTask");
+  const taskId = queryParams.get("viewTask")!;
 
   const show = taskId ? true : false;
+
+  const {data, isError} = useQuery({
+    queryKey: ["task", taskId], 
+    queryFn: () => getTaskbyId({projectId, taskId}),
+    // Only enable the query when the taskId is available
+    enabled: !!taskId,
+    retry: false,
+  });
+
+  // Show a toast notification if the task is not found 
+  
+  useEffect(() => {
+    if (isError) {
+      toast.error("Task not found", { toastId: "error" });
+      navigate(`/projects/${projectId}`);
+    }
+  }, [isError, navigate, projectId]); // Note: We used useEffect because toast.error triggers a re-render while the component is mounted and that gives us an error
 
   return (
     <>
