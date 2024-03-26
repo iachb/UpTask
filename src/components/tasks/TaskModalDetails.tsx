@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getTaskbyId } from "@/api/TasksAPI";
 import { toast } from "react-toastify";
+import { formatDate } from "@/utils/utils";
 
 export default function TaskModalDetails() {
 
@@ -65,9 +66,9 @@ export default function TaskModalDetails() {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
-                  <p className="text-sm text-slate-400">Date added: </p>
+                  <p className="text-sm text-slate-400">Date added: {formatDate(data.createdAt)}</p>
                   <p className="text-sm text-slate-400">
-                    Last Update:{" "}
+                    Last Update:{" "}{formatDate(data.updatedAt)}
                   </p>
                   <Dialog.Title
                     as="h3"
