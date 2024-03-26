@@ -2,7 +2,7 @@ import { isAxiosError } from "axios";
 import api from "../lib/axios";
 import { Project, ProjectFormData, dashboardProjectSchema } from "../types";
 
-// Create a new project with the given data in the form data object and return the created project data
+// Create a new project 
 export async function createProject(formData: ProjectFormData) {
   try {
     const { data } = await api.post("/projects", formData);
@@ -51,7 +51,7 @@ type ProjectAPIType = {
   projectId: Project["_id"];
 };
 
-// Update a project with the given ID and return the updated project data
+// Update a project 
 export async function updateProject({ formData, projectId }: ProjectAPIType) {
   try {
     const { data } = await api.put<string>(`/projects/${projectId}`, formData);
@@ -63,7 +63,7 @@ export async function updateProject({ formData, projectId }: ProjectAPIType) {
   }
 }
 
-// Delete a project with the given ID and return the deleted project data
+// Delete a project by its ID
 export async function deleteProject(id: Project["_id"]) {
   try {
     const url = `/projects/${id}`;

@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "@/lib/axios";
-import { Project, TaskFormData } from "../types";
+import { Project, Task, TaskFormData } from "../types";
 
 type TaskAPI = {
   formData: TaskFormData;
