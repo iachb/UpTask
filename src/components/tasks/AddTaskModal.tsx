@@ -15,7 +15,7 @@ export default function AddTaskModal() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const modalTask = queryParams.get("newTask");
-  const show = modalTask === "true" ? true : false;
+  const show = modalTask ? true : false;
 
   // Get the project ID from the URL
   const params = useParams();
