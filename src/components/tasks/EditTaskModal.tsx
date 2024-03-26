@@ -1,27 +1,55 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Task, TaskFormData } from "@/types/index";
 import { useForm } from "react-hook-form";
 import TaskForm from "./TaskForm";
+import { updateTask } from "@/api/TasksAPI";
+import { toast } from "react-toastify";
 
 type EditTaskModalProps = {
   data: Task;
+  taskId: Task["_id"];
 };
 
-export default function EditTaskModal({ data }: EditTaskModalProps) {
+export default function EditTaskModal({ data, taskId }: EditTaskModalProps) {
   const navigate = useNavigate();
+
+  // Get the project ID from the URL
+  const params = useParams();
+  const projectId = params.projectId!;
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<TaskFormData>({
     defaultValues: { name: data.name, description: data.description },
   });
 
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: updateTask,
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["editProject", projectId] });
+      toast.success(data);
+      reset();
+      navigate(location.pathname, { replace: true });
+    },
+  });
+
   const handleEditTask = (formData: TaskFormData) => {
-    
+    const data = {
+      projectId,
+      taskId,
+      formData,
+    };
+    mutate(data);
   };
 
   return (
@@ -64,7 +92,11 @@ export default function EditTaskModal({ data }: EditTaskModalProps) {
                   <span className="text-fuchsia-600">in this form</span>
                 </p>
 
-                <form className="mt-10 space-y-3" onSubmit={handleSubmit(handleEditTask)} noValidate>
+                <form
+                  className="mt-10 space-y-3"
+                  onSubmit={handleSubmit(handleEditTask)}
+                  noValidate
+                >
                   <TaskForm register={register} errors={errors} />
                   <input
                     type="submit"
