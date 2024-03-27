@@ -1,48 +1,65 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import ProjectForm from "@/components/projects/ProjectForm";
-import { ProjectFormData } from "@/types/index";
-import { createProject } from "@/api/ProjectAPI";
+import ProjectForm from "./ProjectForm";
+import { Project, ProjectFormData } from "@/types/index";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateProject } from "@/api/ProjectAPI";
 import { toast } from "react-toastify";
 
-export default function CreateProjectView() {
-  const navigate = useNavigate();
+type EditProjectFormProps = {
+  data: ProjectFormData;
+  projectId: Project["_id"];
+};
 
-  const initialValues: ProjectFormData = {
-    projectName: "",
-    clientName: "",
-    description: "",
-  };
+export default function EditProjectForm({
+  data,
+  projectId,
+}: EditProjectFormProps) {
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: initialValues });
+  } = useForm({
+    defaultValues: {
+      projectName: data.projectName,
+      clientName: data.clientName,
+      description: data.description,
+    },
+  });
 
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationFn: createProject,
+    mutationFn: updateProject,
     onError: (error) => {
       toast.error(error.message);
     },
     onSuccess: (data) => {
-      // "data" is the project data returned by the API, which is res.send("Succesful") in the backend
+
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["editProject", projectId] });
+
       toast.success(data);
       navigate("/");
     },
   });
 
   const handleForm = (formData: ProjectFormData) => {
-    mutate(formData);
+    const data = {
+      formData,
+      projectId,
+    };
+    mutate(data);
   };
 
   return (
     <>
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-5xl font-black">Create Project</h1>
+        <h1 className="text-5xl font-black">Edit Project</h1>
         <p className="text-2xl font-light text-gray-500 mt-5">
-          Fill out the following form to edit a project
+          Fill out the following form to create a project
         </p>
         <nav className="my-5">
           <Link
@@ -61,7 +78,7 @@ export default function CreateProjectView() {
 
           <input
             type="submit"
-            value="Create Project"
+            value="Edit Project"
             className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 
           text-white uppercase font-bold cursor-pointer transition-colors"
           />
